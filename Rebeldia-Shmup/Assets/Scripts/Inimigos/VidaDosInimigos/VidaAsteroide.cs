@@ -1,19 +1,31 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+
+//ISSO TA MAIS PRA CONTROLE DE TUDO NO ASTEROIDE DO QUE APENAS SO PARA VIDA DELE
 
 public class VidaAsteroide : MonoBehaviour
 {
     public int vida = 250;
+    public ControleVidaPlayer player;
 
 
-    private void OnCollisionEnter(Collision objetoQueBateu)
+    private void OnTriggerEnter(Collider other)
     {
-        if (objetoQueBateu.gameObject.CompareTag("Tiro"))
+        if (other.gameObject.CompareTag("Tiro"))
         {
-            TiroNormal scriptDaBala = objetoQueBateu.gameObject.GetComponent<TiroNormal>();
+            TiroNormal scriptDaBala = other.gameObject.GetComponent<TiroNormal>();
             TomarDano(scriptDaBala.danoAtual);
-            Destroy(objetoQueBateu.gameObject);
+            Destroy(other.gameObject);
         }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            player.ReceberDano(40);
+            Destroy(gameObject);
+        }
+
     }
+
 
     public void TomarDano(int dano)
     {

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Tiro
+  - DanoDoInimigo
   layers:
   - Default
   - TransparentFX

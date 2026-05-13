@@ -9,7 +9,6 @@ public class AtaquePlayer : MonoBehaviour
     public GameObject bala;
 
     private bool podeAtirar = true;
-    private bool podeAtirar2 = false;
 
 
     public float tempoTiroFoda;
@@ -47,7 +46,6 @@ public class AtaquePlayer : MonoBehaviour
             if (podeAtirar == true)
             {   
                 atirar();
-                podeAtirar2 = true;
                 podeAtirar = false;
             }
 
@@ -55,7 +53,6 @@ public class AtaquePlayer : MonoBehaviour
             {
                 chumbo();
                 podeAtirar = true;
-                podeAtirar2 = false;
             }
         }
 
