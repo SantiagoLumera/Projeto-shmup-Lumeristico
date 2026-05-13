@@ -17,8 +17,4 @@ public class TiroNormal : MonoBehaviour
     {
         transform.position += transform.forward * velocidade * Time.deltaTime;
     }
-
-
-
-
 }

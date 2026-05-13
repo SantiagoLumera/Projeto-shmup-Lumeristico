@@ -3,13 +3,14 @@ using UnityEngine;
 public class VidaAsteroide : MonoBehaviour
 {
     public int vida = 250;
-    public TiroNormal tiroNormal;
+
 
     private void OnCollisionEnter(Collision objetoQueBateu)
     {
         if (objetoQueBateu.gameObject.CompareTag("Tiro"))
         {
-            TomarDano(tiroNormal.danoAtual);
+            TiroNormal scriptDaBala = objetoQueBateu.gameObject.GetComponent<TiroNormal>();
+            TomarDano(scriptDaBala.danoAtual);
             Destroy(objetoQueBateu.gameObject);
         }
     }

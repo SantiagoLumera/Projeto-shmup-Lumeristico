@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AtaquePlayer : MonoBehaviour
@@ -6,25 +7,45 @@ public class AtaquePlayer : MonoBehaviour
     public Transform pontoDeTiroSecundario;
 
     public GameObject bala;
-    public GameObject bala2;
 
     private bool podeAtirar = true;
     private bool podeAtirar2 = false;
 
 
-    //Tipos de dano
-    public bool normalDano = true;
-    public bool fodaDano = false;
-
-    public TiroNormal tiroNormal;
+    public float tempoTiroFoda;
+    public float CooldownTiroFoda;
 
 
-    void Update() //Apos aperta o botão esquerdo do mause para atirar, ele alterna entre os tiros (atira e chumbo)
+    public int[] danoNormal = new int[] { 25, 45, 65,};
+    public int danoID = 0; 
+
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+
+        if (CooldownTiroFoda > 0) 
+        {
+            CooldownTiroFoda -= Time.deltaTime;
+            if (CooldownTiroFoda < 0)
+            {
+                CooldownTiroFoda = 0;
+            }
+        }
+
+        if (tempoTiroFoda > 0)
+        {
+            tempoTiroFoda -= Time.deltaTime;
+            if (tempoTiroFoda <= 0)
+            {
+                tempoTiroFoda = 0;
+                danoID = 0;
+                CooldownTiroFoda = 5f;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) //Apos aperta o botão esquerdo do mouse para atirar, ele alterna entre os tiros (atira e chumbo)
         {
             if (podeAtirar == true)
-            {
+            {   
                 atirar();
                 podeAtirar2 = true;
                 podeAtirar = false;
@@ -38,15 +59,18 @@ public class AtaquePlayer : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            normalDano = false;
-            fodaDano = true;
+            if (tempoTiroFoda <= 0 && CooldownTiroFoda <= 0)
+            {
+                tempoTiroFoda = 5f;
+                danoID = 3; 
+            }
+            
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Alpha2))
         {
-            normalDano = true;
-            fodaDano = false;
+            danoID = 1;
         }
 
     }
@@ -56,28 +80,43 @@ public class AtaquePlayer : MonoBehaviour
         GameObject novaBala = Instantiate(bala, pontoDeTiroPrimario.position, pontoDeTiroPrimario.rotation);
         TiroNormal scriptDaBala = novaBala.GetComponent<TiroNormal>();
 
-        if (fodaDano  == true)
+            switch (danoID)
         {
-            scriptDaBala.danoAtual = 55;
+            case 0:
+                scriptDaBala.danoAtual = danoNormal[0];
+                break;
+            case 1:
+                scriptDaBala.danoAtual = danoNormal[1];
+                break;
+            case 2:
+                scriptDaBala.danoAtual = danoNormal[2];
+                break;
+            default:
+                scriptDaBala.danoAtual = danoNormal[0];
+                break;
         }
-        else
-        {
-            scriptDaBala.danoAtual = 25;
-        }
+
     }
 
     void chumbo()
     {
-        GameObject novaBala = Instantiate(bala2, pontoDeTiroSecundario.position, pontoDeTiroSecundario.rotation);
+        GameObject novaBala = Instantiate(bala, pontoDeTiroSecundario.position, pontoDeTiroSecundario.rotation);
         TiroNormal scriptDaBala = novaBala.GetComponent<TiroNormal>();
 
-        if (fodaDano == true)
+        switch (danoID)
         {
-            scriptDaBala.danoAtual = 55;
-        }
-        else
-        {
-            scriptDaBala.danoAtual = 25;
+            case 0:
+                scriptDaBala.danoAtual = danoNormal[0];
+                break;
+            case 1:
+                scriptDaBala.danoAtual = danoNormal[1];
+                break;
+            case 2:
+                scriptDaBala.danoAtual = danoNormal[2];
+                break;
+            default:
+                scriptDaBala.danoAtual = danoNormal[0];
+                break;
         }
     }
 
