@@ -1,20 +1,29 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraMov : MonoBehaviour
 {
-    public Vector2 turn;
-    public float sensitivity = 2f;
+    public GameObject player;
+
+    private Vector3 mousePos;
+
+    public float speed = 5f;
 
     private void Start()
     {
-        Cursor. lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    private void Update()
+    void Update()
     {
-        turn.x += Input.GetAxis("Mouse X") * sensitivity;
-        turn.y += Input.GetAxis("Mouse Y") * sensitivity;
-        turn.y = Mathf.Clamp(turn.y, 0, 90f);
-        transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+        mousePos = Input.mousePosition;
+
+        mousePos.z = 10f;
+
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        mousePos.y = 0f;
+
+        player.transform.position = Vector3.Lerp(player.transform.position, mousePos, Time.deltaTime * speed);
     }
 }

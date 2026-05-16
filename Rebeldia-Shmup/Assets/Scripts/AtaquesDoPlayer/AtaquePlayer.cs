@@ -8,6 +8,8 @@ public class AtaquePlayer : MonoBehaviour
 
     public GameObject bala;
 
+    public float tempoEntreTiros;
+
     private bool podeAtirar = true;
 
 
@@ -41,17 +43,25 @@ public class AtaquePlayer : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)) //Apos aperta o botão esquerdo do mouse para atirar, ele alterna entre os tiros (atira e chumbo)
+        if (tempoEntreTiros > 0)
+        {
+            tempoEntreTiros -= Time.deltaTime; 
+        }
+
+
+        if (Input.GetKey(KeyCode.Mouse0) && tempoEntreTiros <= 0) //Apos aperta o botão esquerdo do mouse para atirar, ele alterna entre os tiros (atira e chumbo)
         {
             if (podeAtirar == true)
             {   
                 atirar();
+                tempoEntreTiros = 0.2f;
                 podeAtirar = false;
             }
 
-            else
+            else 
             {
                 chumbo();
+                tempoEntreTiros = 0.2f;
                 podeAtirar = true;
             }
         }
@@ -61,7 +71,7 @@ public class AtaquePlayer : MonoBehaviour
             if (tempoTiroFoda <= 0 && CooldownTiroFoda <= 0)
             {
                 tempoTiroFoda = 5f;
-                danoID = 3; 
+                danoID = 3;
             }
             
         }
