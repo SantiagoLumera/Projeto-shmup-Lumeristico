@@ -8,7 +8,8 @@ public class AtaquePlayer : MonoBehaviour
 
     public GameObject bala;
 
-    public float tempoEntreTiros;
+    public float tempoEntreTiros = 0.5f;
+    public float fireRate;
 
     private bool podeAtirar = true;
 
@@ -23,7 +24,7 @@ public class AtaquePlayer : MonoBehaviour
     void Update()
     {
 
-        if (CooldownTiroFoda > 0) 
+        /*if (CooldownTiroFoda > 0) 
         {
             CooldownTiroFoda -= Time.deltaTime;
             if (CooldownTiroFoda < 0)
@@ -41,7 +42,7 @@ public class AtaquePlayer : MonoBehaviour
                 danoID = 0;
                 CooldownTiroFoda = 5f;
             }
-        }
+        }*/
 
         if (tempoEntreTiros > 0)
         {
@@ -54,19 +55,19 @@ public class AtaquePlayer : MonoBehaviour
             if (podeAtirar == true)
             {   
                 atirar();
-                tempoEntreTiros = 0.2f;
+                tempoEntreTiros = fireRate;
                 podeAtirar = false;
             }
 
             else 
             {
                 chumbo();
-                tempoEntreTiros = 0.2f;
+                tempoEntreTiros = fireRate;
                 podeAtirar = true;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        /*if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             if (tempoTiroFoda <= 0 && CooldownTiroFoda <= 0)
             {
@@ -78,7 +79,7 @@ public class AtaquePlayer : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha2))
         {
             danoID = 1;
-        }
+        }*/
 
     }
 
@@ -125,6 +126,11 @@ public class AtaquePlayer : MonoBehaviour
                 scriptDaBala.danoAtual = danoNormal[0];
                 break;
         }
+    }
+
+    void modoBerserk()
+    {
+        danoID = 3;
     }
 
 }

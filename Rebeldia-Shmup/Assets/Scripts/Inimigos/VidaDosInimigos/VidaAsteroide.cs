@@ -18,14 +18,27 @@ public class VidaAsteroide : MonoBehaviour
             Destroy(other.gameObject);
         }
 
+
         if (other.gameObject.CompareTag("Player"))
         {
             player.ReceberDano(40);
             Destroy(gameObject);
         }
-
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("DanoConstante"))
+        {
+            SuperLaser scriptDoLaser = other.gameObject.GetComponent<SuperLaser>();
+            if (scriptDoLaser.laserDanoAtivo == true)
+            {
+                TomarDano(scriptDoLaser.danoDoLaser);
+                scriptDoLaser.laserDanoAtivo = false;
+                scriptDoLaser.tempoDoDano = 1f;
+            }
+        }
+    }
 
     public void TomarDano(int dano)
     {

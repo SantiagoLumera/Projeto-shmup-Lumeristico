@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Tiro
   - DanoDoInimigo
+  - Inimigo
+  - DanoConstante
   layers:
   - Default
   - TransparentFX
