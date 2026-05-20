@@ -25,7 +25,7 @@ public class SuperLaser : MonoBehaviour
         }
     }
 
-    /*public void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Inimigo") && laserDanoAtivo == true)
         {
@@ -33,7 +33,7 @@ public class SuperLaser : MonoBehaviour
             tempoDoDano = 2f;
         }     
             
-    }*/
+    }
 
 
 }

@@ -8,6 +8,21 @@ public class VidaAsteroide : MonoBehaviour
     public int vida = 250;
     public ControleVidaPlayer player;
 
+    public float velocidadeAsteroide = 3f;
+    public float tempoParaAsteroideSumir = 30f;
+
+
+    public void Update()
+    {   
+        tempoParaAsteroideSumir -= Time.deltaTime;
+        transform.Translate(Vector3.back * velocidadeAsteroide * Time.deltaTime);
+
+        if (tempoParaAsteroideSumir <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
